@@ -1,0 +1,67 @@
+﻿@model IEnumerable<PLatform.Models.Class>
+@{
+    ViewBag.Title = "Index";
+    var count = 0;
+
+}
+
+<link rel="stylesheet" href="~/Content/ClassStyle.css">
+
+<section style="min-height: 305px;">
+    <h1>الحصص</h1>
+
+    <div class="accordion">
+
+
+        @foreach (var item in Model)
+        {
+            if (item.IsAvailable)
+            {
+                <div class="accordion-item" dir="rtl">
+                    <div class="accordion-item-header">
+                        @item.Name
+                    </div>
+                    <div class="accordion-item-body">
+                        <div class="accordion-item-body-content">
+                            <ul style="padding-right: 1rem; list-style: none;">
+                                <li>
+                                    <div class="container">
+                                        <div class="row ClassContent">
+                                            <div class="col-lg-12" style="margin: 10px;">
+                                                <i class="fa-solid fa-video"></i> <a href="~/WatchVideo/Index/@count">الفيديو</a>
+                                            </div>
+
+                                            <div class="col-lg-12" style="margin: 10px;">
+                                                <i class="fa-solid fa-file-pdf"></i> <a href="@item.Training">التدريبات</a>
+                                            </div>
+
+                                            <div class="col-lg-12" style="margin: 10px;">
+                                                <i class="fa-regular fa-file-lines"></i> <a href="/Quiz/Index/@item.Id">الامتحان</a>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                { count++; }
+
+
+            }
+
+        }
+
+
+
+
+
+    </div>
+</section>
+
+
+<script src="~/Scripts/MyScripts/material.js"></script>

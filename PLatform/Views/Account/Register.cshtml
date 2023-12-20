@@ -1,0 +1,63 @@
+﻿@model PLatform.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+    Layout = null;
+}
+
+
+<link rel="stylesheet" href="~/Content/LogInStyle.css">
+
+
+<div class="loginBox" style="border-radius: 60px;box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; ">
+    <h1 style="text-align: center; color:  rgb(96 56 19);"> <span style="color: black;">تسجيل</span> الدخول</h1>
+
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+  
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="inputBox">
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" , type="email" })
+            </div>
+        </div>
+        <div class="inputBox">
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="inputBox">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="inputBox">
+            @Html.LabelFor(m => m.GradeId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.GradeId, Model.GradeList, "اختر الصف الدراسي", new { @class = "form-control" , dir="rtl" })
+            </div>
+        </div>
+
+
+        <div class="inputBox">
+            <div class="col-md-offset-2 col-md-10">
+                <input style="background: #603813;" type="submit" class="btn btn-default" value="Register" />
+            </div>
+        </div>
+
+
+
+
+    }
+
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

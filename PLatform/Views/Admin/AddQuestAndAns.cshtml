@@ -1,0 +1,87 @@
+﻿@model PLatform.ViewModels.AddQuestsAndAnswersViewModel
+
+@{
+    ViewBag.Title = "AddQuestAndAns";
+    Layout = "~/Views/Shared/_AdminPageLayout.cshtml";
+}
+<link rel="stylesheet" href="~/Content/AddQuestions.css" />
+@using (Html.BeginForm("SaveQuests", "Admin"))
+{
+
+    <div class="row">
+        @Html.LabelFor(m => m.question.Text)
+        @Html.TextBoxFor(m => m.question.Text)
+    </div>
+
+
+    <div class="row">
+        @Html.LabelFor(m => m.question.mark)
+        @Html.TextBoxFor(m => m.question.mark, new { @type = "number" , min ="1"  })
+    </div>
+
+
+    <div class="row">
+        <label>
+            @Html.RadioButtonFor(m => m.answer1.IsCorrect, true, new { @class = "name" })
+            @Html.TextBoxFor(m => m.answer1.answer.Text)
+        </label>
+    </div>
+
+    <div class="row">
+        <label>
+            @Html.RadioButtonFor(m => m.answer2.IsCorrect, true, new { @class = "name" })
+            @Html.TextBoxFor(m => m.answer2.answer.Text)
+        </label>
+    </div>
+
+    <div class="row">
+        <label>
+            @Html.RadioButtonFor(m => m.answer3.IsCorrect, true, new { @class = "name" })
+            @Html.TextBoxFor(m => m.answer3.answer.Text)
+        </label>
+    </div>
+
+    <div>
+        <label>
+            @Html.RadioButtonFor(m => m.answer4.IsCorrect, true, new { @class = "name" })
+            @Html.TextBoxFor(m => m.answer4.answer.Text)
+        </label>
+    </div>
+
+    <input type="submit" value="Save" />
+}
+
+<script>
+    $(".name").click(function () {
+        $(".name").prop("checked", false);
+        $(this).prop("checked", true);
+    });
+
+
+    $(document).ready(function () {
+        // Listen for the form submission event
+        $('#form-container form').submit(function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Serialize the form data
+            var formData = $(this).serialize();
+
+            // Send the AJAX request
+            $.ajax({
+                url: $(this).attr('action'), // Get the form action attribute
+                type: $(this).attr('method'), // Get the form method attribute
+                data: formData,
+                success: function (response) {
+                    // Handle the response from the server if needed
+                    alert('Form submitted successfully!');
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors if any
+                    console.error(error);
+                    alert('Form submission failed.');
+                }
+            });
+        });
+    });
+
+</script>

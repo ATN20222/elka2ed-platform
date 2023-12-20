@@ -1,0 +1,52 @@
+﻿@model PLatform.ViewModels.ExamQuestionsViewModel
+@{
+    ViewBag.Title = "Index";
+    int count = 1;
+}
+
+<link rel="stylesheet" href="~/Content/Quiz.css">
+
+<section>
+    <h1 style="text-align:center; margin:10px !important; margin-top:50px !important;">امتحان الحصة الاولي</h1>
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model.QuestionsAndAnswers)
+            {
+                <div class="Question col-lg-12" dir="rtl">
+                    <h6 style="padding: 10px;">@count - @item.questions.Text</h6>
+
+                    @foreach (var ans in item.answers)
+                    {
+                        <div class="form-check" dir="rtl">
+                            <input attr="@ans.Id,@ans.QuestionsId" dir="rtl" class="handle" type="radio" name="A+@ans.QuestionsId" id="A+@ans.Id" value="option1">
+                            <label class="" for="A+@ans.Id" dir="rtl">
+                                @ans.Text
+                            </label>
+                        </div>
+
+                    }
+
+                    @{
+                        count++;
+                    }
+
+
+                </div>
+            }
+
+
+        </div>
+        <input id="submitEx" type="submit" class="submitBtn btn">
+
+    </div>
+</section>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/Scripts/MyScripts/CQA.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<script>
+
+    const ExId = parseInt('@Model.exam.Id');
+</script>

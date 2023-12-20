@@ -1,0 +1,68 @@
+﻿@using PLatform.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/Content/style.css">
+<link rel="stylesheet" href="~/Content/all.min.css">
+<link rel="stylesheet" href="~/Content/bootstrap.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200&family=Jomhuria&display=swap" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<link rel="stylesheet" href="~/Content/LogInStyle.css">
+
+
+<div class="loginBox" style="padding:50px; border-radius: 60px; box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; ">
+    <h1 style="text-align: center; color:  rgb(96 56 19);"> <span style="color: black;">تسجيل</span> الدخول</h1>
+
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="inputBox">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email", placeholder = "Email@exmable.com" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+
+
+        <div class="inputBox">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+        </div>
+
+
+
+        <div class="row" dir="rtl">
+
+            <div class="col-lg-6" style="display: flex; justify-content: center; align-items: center;">
+                <input class="submit" type="submit" name="" value="تسجيل الدخول" style="background-color: rgb(96 56 19) ;font-size: 25px;">
+
+            </div>
+
+            <div class="col-lg-6" style="padding-top:5px;">
+                <span><a href="~/Account/Register" class="makeMail" style="text-decoration: underline;font-size: 25px;">انشئ حسابك الأن</a></span>
+            </div>
+
+        </div>
+
+        @*@Html.ActionLink("Forgot your password?", "ForgotPassword")*@
+
+        @* Enable this once you have account confirmation enabled for password reset functionality
+            <p>
+            </p>*@
+    }
+        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,222 @@
+﻿@model IEnumerable<PLatform.Models.Grade>
+@{
+    ViewBag.Title = "SelectGrade";
+    Layout = "~/Views/Shared/_AdminPageLayout.cshtml";
+}
+
+@{
+    var count = 1;
+    var boxC = "box";
+}
+
+<link rel="stylesheet" href="~/Content/popUp.css"/>
+<div class="overview">
+    <div class="title">
+        <i style="background-color:brown;" class="uil uil-book"></i>
+        <span class="text">اختر السنة الدراسية</span>
+    </div>
+
+    <div class="boxes">
+        @foreach (var item in Model)
+        {
+            <span ClassId="@item.Id" GradeId="@item" class="box @boxC@count" style="text-decoration:none;">
+                <i class="uil uil-graduation-cap"><span class="u-badge--number">@count</span></i>
+                <span class="text">@item.Name</span>
+                @*<span class="number">3,000</span>*@
+            </span>
+            { count++; }
+        }
+
+
+
+
+    </div>
+
+</div>
+
+
+
+
+<div class="popContainer" id="popContainer">
+    <form>
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+            <label for="duration">Duration:</label>
+            <input min="0" type="number" id="duration" name="duration" required>
+        </div>
+
+
+
+        <button id="AddExamBtn" ClassId="val"  type="submit" >Submit</button>
+    </form>
+</div>
+
+
+
+
+
+
+
+<section>
+    <div class="container">
+
+        <div class="row" id="cardsContainer" style="display:flex; justify-content:center;">
+
+        </div>
+
+    </div>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script>
+
+    var ClassItem = document.querySelectorAll(".box");
+
+    ClassItem.forEach((ele) => {
+
+        ele.addEventListener("click", () => {
+            const classId = parseInt(ele.getAttribute("ClassId"));
+            console.log(classId);
+            $.ajax({
+                url: "/Admin/GetClass",
+                type: 'Post',
+                dataType: 'json',
+                data: {
+                    id: classId
+                },
+                success: function (response) {
+                    var parent = document.getElementById("cardsContainer");
+                    parent.innerHTML = "";
+                    response.ClassHasExamViewModel.forEach((ele) => {
+                        var query = `<div class="col-2 Card1 card  align-items-center justify-content-flex-start text-center" style="background-color: white; width: 200px; height:300px ; border-radius: 20px; margin: 10px;  padding: 10px;" id="Card2">
+                <div class="icon  justify-content-center align-items-center" style="background-color:#f3af4e; border-radius: 50%; justify-content: center; display: flex; width: 80px; height: 80px; ">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                </div>
+                <h6 style="margin:10px">${ele.Class.Name}</h6>
+                    
+                <a href="/Admin/EditClass/${ele.Class.Id}" style="margin:10px;" class="btn btn-danger">تعديل الحصة <i class="fa-solid fa-pen"></i> </a>
+
+                ${ele.HasExam ? `<button onclick="display(${ele.Class.Id})" class="btn btn-danger">عرض الأمتحان <i class="fa-solid fa-eye"></i> </button>` : `<button onclick="display(${ele.Class.Id})" class="btn btn-danger">اضافة امتحان <i class="fa-solid fa-plus"></i> </button>`}
+                    
+                     <div class="row">
+                        <label for="isAvailable">متاح للطالب</label>
+
+                        ${ele.Class.IsAvailable ? `<input  onclick="save(${ele.Class.Id}, event)" type="checkbox" checked id="isAvailable" name="isAvailable" />` : `<input onclick="save(${ele.Class.Id}, event)" type="checkbox" id="isAvailable" name="isAvailable" />`}
+                    </div>
+
+            </div>`;
+                        $("#cardsContainer").append(query);
+
+
+                    });
+
+                    var plusEle = `<a href="/Admin/AddClass/${classId}" class="col-2 Card1 card  align-items-center justify-content-flex-start text-center" style="background-color: white; width: 200px; height:300px ; border-radius: 20px; margin: 10px;  padding: 10px;align-items:center !important; justify-content:center;" id="Card2">
+                <div class="icon  justify-content-center align-items-center" style="background-color:#f3af4e; border-radius: 50%; justify-content: center; display: flex; width: 80px; height: 80px; ">
+                    <i class="fa-solid fa-plus"></i>
+                </div>
+                <h6 style="margin:10px">اضافة حصة</h6>
+
+            </a>`;
+                    $("#cardsContainer").append(plusEle);
+
+                },
+                error: function (xhr, status, error) {
+                    // Handle any errors here
+                }
+            });
+        });
+
+    })
+    var popContainer = document.getElementById("popContainer");
+    var AddExamBtn = document.getElementById("AddExamBtn");
+    popContainer.style.display = "none";
+    function display(id) {
+        popContainer.style.display = "flex";
+
+        AddExamBtn.setAttribute('classId', id);
+        console.log(id);
+
+
+
+
+    }
+
+    AddExamBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        var obj = {
+            classId: parseInt(AddExamBtn.getAttribute('classId')),
+            title: document.getElementById('title').value,
+            duration: parseInt(document.getElementById('duration').value)
+        }
+        console.log(obj);
+
+
+        $.ajax({
+            url: '/Admin/AddExam',
+            type: 'POST',
+            data: JSON.stringify({ ExamData: obj }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (response.success) {
+
+                    window.location.href = '/Admin/AddQuestAndAns/' + response.id;
+
+                } else {
+                    
+
+                }
+
+
+            },
+            error: function (xhr, status, error) {
+                swal("كمل الامتحان يا كبير", "! انت تقدر");
+
+            }
+        });
+
+    });
+
+
+    function save(id, event) {
+        var obj = {
+            classId: parseInt(id),
+            IsAvailable: event.target.checked,
+        }
+
+
+        $.ajax({
+            url: '/Admin/SetAvailable',
+            type: 'POST',
+            data: JSON.stringify({ ClassData: obj }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                console.log(response.IsAvailable)
+                if (response.IsAvailable == true) {
+
+                    swal("successful!", "تم اظهار الحصة بنجاح", "success");
+
+                } else {
+                    swal("successful!", "تم اخفاء الحصة بنجاح", "success");
+
+                }
+
+
+            },
+            error: function (xhr, status, error) {
+               
+
+            }
+        });
+
+
+
+    }
+
+
+
+
+
+</script>

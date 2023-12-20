@@ -1,0 +1,40 @@
+﻿@model PLatform.Models.Class
+@{
+    ViewBag.Title = "EditClass";
+    Layout = "~/Views/Shared/_AdminPageLayout.cshtml";
+}
+
+
+<div class="container" dir="rtl">
+    @using (Html.BeginForm("SaveClass", "Admin"))
+    {
+        @Html.AntiForgeryToken()
+
+
+        @Html.HiddenFor(Model => Model.Id)
+        @Html.HiddenFor(Model => Model.GradeId)
+
+        <div class="form-group">
+            @Html.LabelFor(Model => Model.Name)
+            @Html.TextBoxFor(Model => Model.Name, new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(Model => Model.Description)
+            @Html.TextAreaFor(Model => Model.Description, new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(Model => Model.VidSrc)
+            @Html.TextBoxFor(Model => Model.VidSrc, new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            Src @Html.LabelFor(Model => Model.Training)
+            @Html.TextBoxFor(Model => Model.Training, new { @class = "form-control" })
+        </div>
+
+        <button style="margin-top: 10px; background-color: #5c2a29;" type="submit" class="btn btn-danger">Add Class</button>
+    }
+</div>
+

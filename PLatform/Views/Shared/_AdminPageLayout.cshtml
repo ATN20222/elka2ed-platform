@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <link rel="stylesheet" href="~/Content/all.min.css">
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200&family=Jomhuria&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <!----===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="~/Content/AdminDashBoard.css" />
+    <title>Admin Dashboard Panel</title>
+</head>
+<body>
+    <nav>
+        <div class="logo-name">
+            <div class="logo-image">
+                <img src="~/Material/logo 1-PhotoRoom.png-PhotoRoom.png" alt="">
+            </div>
+            @*<span class="logo_name">منصة القائد التعليمية</span>*@
+        </div>
+
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li>
+                    <a href="/Admin/Index">
+                        <i class="uil uil-estate"></i>
+                        <span class="link-name">رئيسي</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Admin/SelectGrade">
+                        <i class="uil uil-files-landscapes"></i>
+                        <span class="link-name">اضافة حصة</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Admin/ManageUsers">
+                        <i class="uil uil-user"></i>
+                        <span class="link-name">إدارة المستخدمين</span>
+                    </a>
+                </li>
+       
+            </ul>
+
+            <ul class="logout-mode">
+                <li>
+
+                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logout" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <a href="javascript:document.getElementById('logout').submit()" style="margin: 10px; color: #603813; text-decoration: none;font-family: 'Cairo', sans-serif !important;font-family: 'Jomhuria', cursive !important ;font-size: 30px;"><i class="uil uil-signout"></i>خروج  </a>
+                        
+
+
+
+                    }
+
+                </li>
+                <li class="mode">
+                    <a href="#">
+                        <i class="uil uil-moon"></i>
+                        <span class="link-name">وضع ليلي</span>
+                    </a>
+
+                    <div class="mode-toggle">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="dashboard">
+        <div class="top">
+            <i class="uil uil-bars sidebar-toggle"></i>
+
+            <div class="search-box">
+                <i class="uil uil-search"></i>
+                <input type="text" placeholder="Search here...">
+            </div>
+
+            <img src="user.png" alt="">
+        </div>
+        <div class="dash-content">
+            @RenderBody()
+
+        </div>
+
+    </section>
+
+    @if (TempData["notify"] == "true")
+    {
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script>
+            swal({
+                title: "Add More?",
+                text: "",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+                    } else {
+                        window.location.href = "/Admin/SelectGrade";
+                    }
+                });
+        </script>
+    }
+    <script src="~/Scripts/MyScripts/AdminDashBoard.js"></script>
+</body>
+</html>

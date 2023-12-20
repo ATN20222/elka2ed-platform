@@ -1,0 +1,147 @@
+﻿@model PLatform.ViewModels.ChangePasswordProfileViewModel
+
+<link rel="stylesheet" href="~/Content/Profile.css">
+
+
+<section style="min-height: 500px; margin-top: 50px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 LeftSide">
+                <img src="~/images/Avatar.png" class="img-circle img-thumbnail" alt="avatar" style="border-radius: 50%;">
+                <input type="file">
+            </div>
+
+            <div class="col-lg-8 RightSide">
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="input-container">
+                            <label>Name</label>
+
+                            <input placeholder="Enter text" class="input-field" value="@Model.applicationUser.Email" disabled type="text">
+                            <label for="input-field" class="input-label">Enter text</label>
+                            <span class="input-highlight"></span>
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="input-container">
+                            <label>E-mail</label>
+                            <input placeholder="Enter text" class="input-field" value="@Model.applicationUser.Email" disabled type="text">
+                            <label for="input-field" class="input-label">Enter text</label>
+                            <span class="input-highlight"></span>
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="input-container">
+                            <label>Phone Number</label>
+                            <input placeholder="none" class="input-field" value="@Model.applicationUser.PhoneNumber" disabled type="text">
+                            <label for="input-field" class="input-label">none</label>
+                            <span class="input-highlight"></span>
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="col-lg-6">
+                        <div class="input-container">
+                            <label>Grade</label>
+                            <input placeholder="Enter text" class="input-field" value="@Model.applicationUser.Grade.Name" disabled type="text">
+                            <label for="input-field" class="input-label">Enter text</label>
+                            <span class="input-highlight"></span>
+                        </div>
+
+
+                    </div>
+
+                    @using (Html.BeginForm("ChangePassword", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                <div class="ChangePassContainer container">
+
+                    <div class="">
+                        <div id="ShowPassContainer"  class="" style="font:inherit ; color: inherit; display: flex;">
+
+                            <div class="IconDown" style="margin-right: 5px; transition: all ease .2s; padding-right:20px">
+                                <i id="IconDown" class="fa-solid fa-caret-right"></i>
+                            </div>
+                            CHANGE PASSWORD
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="input-container">
+
+                                @Html.PasswordFor(m => m.changePasswordViewModel.OldPassword, new { @class = "input-field", placeholder = "Enter Old Password" })
+
+                                @* <input placeholder="Enter Old Password" class="input-field" value="" type="password">*@
+                                <label for="input-field" class="input-label" style="width: 300px;">Enter Old Password</label>
+                                <span class="input-highlight"></span>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-lg-6">
+                            <div class="input-container">
+                                @*<input placeholder="Enter New Password" class="input-field" value="" type="password">*@
+
+                                @Html.PasswordFor(m => m.changePasswordViewModel.NewPassword, new { @class = "input-field", placeholder = "Enter New Password" })
+
+                                <label for="input-field" class="input-label" style="width: 300px;">Enter New Password</label>
+                                <span class="input-highlight"></span>
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="input-container">
+                                @*<input placeholder="Confirm Password" class="input-field" value="" type="password">*@
+
+                                @Html.PasswordFor(m => m.changePasswordViewModel.ConfirmPassword, new { @class = "input-field",placeholder = "Confirm Password" })
+
+
+                                <label for="input-field" class="input-label" style="width:300px;">Confirm Password</label>
+                                <span class="input-highlight"></span>
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-lg-12 SubmitContainer">
+                            <input type="submit" value="تأكيد" class="submitBtn btn btn-danger"></input>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                    }
+
+
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+
+<script src="~/Scripts/MyScripts/profile.js"></script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

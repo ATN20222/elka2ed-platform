@@ -1,0 +1,98 @@
+﻿@model IEnumerable<PLatform.ViewModels.StudentRankViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{ 
+    var rank = 1;
+    var FirstThree = 1;
+    var x = "green";
+}
+
+<link rel="stylesheet" href="~/Content/Rank.css" />
+<section class="intro">
+        <div class="mask d-flex align-items-center">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <div class="card shadow-2-strong">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-borderless mb-0">
+
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Username</th>
+                                                <th scope="col">Points</th>
+                                                <th scope="col">Rank</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+
+                                            @foreach (var item in Model.OrderBy(c => c.Points).Reverse())
+                                            {
+                                                {
+                                                    if (item.UserName == TempData["userId"])
+                                                    {
+                                                        x = "grey";
+                                                    }else if (FirstThree <= 3)
+                                                    {
+                                                        x = "green";
+                                                    }
+                                                    else
+                                                    {
+                                                        x = "transperant";
+                                                    }
+
+
+                                                    int Index = item.UserName.IndexOf("@");
+
+                                                    string username = item.UserName.Substring(0, Index);
+
+
+                                                    if (FirstThree <= 3)
+                                                    {
+
+
+
+                                                        <tr style="background-color:@x; border-bottom: 10px solid #603813;">
+                                                            <th scope="row">@username</th>
+                                                            <td>@item.Points</td>
+                                                            <td>@rank</td>
+                                                        </tr>
+                                                    }
+                                                    else
+                                                    {
+                                                        
+
+
+
+                                                        <tr style="background-color:@x; border-bottom: 10px solid #603813;;">
+                                                            <th scope="row">@username</th>
+                                                            <td>@item.Points</td>
+                                                            <td>@rank</td>
+
+                                                        </tr>
+                                                    }
+                                                    {
+                                                        ++rank;
+                                                        FirstThree++;
+                                                    }
+                                                }
+                                            }
+
+
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>

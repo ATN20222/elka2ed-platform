@@ -1,0 +1,71 @@
+﻿@model IEnumerable<PLatform.Models.ApplicationUser>
+@{
+    ViewBag.Title = "ManageUsers";
+    Layout = "~/Views/Shared/_AdminPageLayout.cshtml";
+
+
+}
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+
+</script>
+
+
+       @if(TempData["banned"] == "true")
+       {
+           <script>
+               swal({
+                   title: "Banned!",
+                   text: "تم حظر الحساب!",
+                   icon: "success",
+                   button: "close",
+               });
+           </script>
+
+       }
+<div class="container" style="padding:20px;">
+    <h1 style="text-align:center">
+        Manage Users
+    </h1>
+    <hr style="margin:60px" />
+    <table id="myTable" class="display">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Grade</th>
+                <th>Points</th>
+                <th>Ban</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td> @item.UserName </td>
+                    <td> @item.Email </td>
+                    <td> @item.Grade.Name </td>
+                    <td> @item.points</td>
+                    <td> <a href="/Admin/BanUser/@item.Id" class="btn btn-link"><img src="~/images/frying-pan (1).png" width="30px" /></a></td>
+                    <td> <a href="/Admin/DeleteUser/@item.Id" class="btn btn-link"><i class="fa-solid fa-trash-can"></i></a> </td>
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+</div>

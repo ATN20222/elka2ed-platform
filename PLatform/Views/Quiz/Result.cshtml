@@ -1,0 +1,66 @@
+﻿@model IEnumerable<PLatform.ViewModels.QuestionAnswerSubmitViewModel>
+@{
+    ViewBag.Title = "Result";
+}
+@{ 
+    int count = 1;
+
+}
+
+<link rel="stylesheet" href="~/Content/Quiz.css">
+
+<section>
+    <h1 style="text-align:center; margin:10px !important; margin-top:50px !important;">امتحان الحصة الاولي</h1>
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="Question col-lg-12" dir="rtl">
+                    <h6 style="padding: 10px;">@count - @item.questions.Text</h6>
+
+                    @foreach (var ans in item.answers)
+                    {
+                        if (item.FalseAnswer != null && ans.Id == item.FalseAnswer.Id)
+                        {
+                            <div class="WrongAns form-check" dir="rtl">
+                                <input checked attr="@ans.Id,@ans.QuestionsId" dir="rtl" class="handle" type="radio" name="A+@ans.Id" id="A+@ans.Id" value="option1">
+                                <label class="" for="A+@ans.Id" dir="rtl">
+                                    @ans.Text
+                                </label>
+                            </div>
+                        }
+                        else if (item.CorrectAns.Id == ans.Id)
+                        {
+                            <div class="form-check correctAns" dir="rtl">
+                                <input disabled attr="@ans.Id,@ans.QuestionsId" dir="rtl" class="handle" type="radio" name="A+@ans.Id" id="A+@ans.Id" value="option1">
+                                <label class="" for="A+@ans.Id" dir="rtl">
+                                    @ans.Text
+                                </label>
+                            </div>
+                        }
+                        else
+                        {
+
+                            <div class="form-check" dir="rtl">
+                                <input disabled attr="@ans.Id,@ans.QuestionsId" dir="rtl" class="handle" type="radio" name="A+@ans.Id" id="A+@ans.Id" value="option1">
+                                <label class="" for="A+@ans.Id" dir="rtl">
+                                    @ans.Text
+                                </label>
+                            </div>
+                        }
+
+                    }
+                    @{
+                        count++;
+                    }
+
+
+                </div>
+            }
+
+
+        </div>
+
+
+    </div>
+</section>

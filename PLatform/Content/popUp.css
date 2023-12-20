@@ -1,0 +1,57 @@
+﻿.popContainer {
+    background-color: #00000022;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top:0;
+    justify-content: center;
+    align-items: center;
+    display:flex;
+    z-index:100;
+}
+
+form {
+    background-color:white;
+    padding: 20px;
+    width: 16.5rem;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+    button[type="submit"]:hover {
+        background-color: #3e8e41;
+    }
+#logout{
+background-color: transparent;
+padding: 0px;
+width: auto !important;
+box-shadow: none !important;
+}
